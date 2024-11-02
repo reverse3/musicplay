@@ -191,7 +191,7 @@ body{
     position: absolute;
     left: 0;
     bottom: 0;
-    width: 390px;
+    width: 100%;
     max-height: 250px;
     background: var(--white);
     box-shadow: 0px -5px 15px rgba(0, 0, 0, 0.2);
