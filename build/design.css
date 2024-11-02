@@ -22,6 +22,7 @@ body{
 
 .wrapper{
     width: 380px;
+    position: relative;
     border-radius: 15px;
     padding: 25px 30px;
     background: var(--white);
@@ -32,7 +33,8 @@ body{
     cursor: pointer;
 }
 
-.top-bar, .progress-area .timer{
+.top-bar, .progress-area .timer, 
+.controls, .music-list .header, .music-list li{
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -125,34 +127,158 @@ body{
 .controls {
     display: flex;
     align-items: center;
-    justify-content: center; /* Centers the controls within the wrapper */
+    justify-content: center; 
     width: 100%;
-    gap: 25px; /* Space between each control icon */
-    margin: 30px 0 10px 0; /* Adjusts top and bottom margin */
+    gap: 25px;
+    margin: 30px 0 10px 0; 
 }
 
-.controls i,
-.controls .play-pause i {
+.controls i{
     font-size: 28px;
-    cursor: pointer;
-    background: linear-gradient(90deg, var(--pink) 0%, var(--violet) 100%);
+    user-select: none;
+    background: linear-gradient(90deg, var(--pink) 0%, var(--violet)100%);
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
-.play-pause {
+.controls i:nth-child(2), 
+.controls i:nth-child(4){
+    font-size: 43px;
+}
+
+.controls #prev{
+    margin-right: -13px;
+}
+
+.controls #next{
+    margin-left: -13px;
+}
+
+.controls .play-pause{
+    height: 54px;
+    width: 54px;
+    background: linear-gradient(var(--white) 0%, var(--darkwhite)100%);
+    box-shadow: 0px 0px 5px var(--pink);
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
 }
+.play-pause::before{
+    content: "";
+    position: absolute;
+    height: 43px;
+    width: 43px;
+    border-radius: inherit;
+    background: linear-gradient(var(--pink) 0%, var(--violet)100%);
+}
 
-.play-pause i {
-    font-size: 40px; /* Larger play/pause icon */
+.play-pause i{
+    height: 43px;
+    width: 43px;
+    line-height: 43px;
+    text-align: center;
+    border-radius: inherit;
+    background-clip: text;
+    background: inherit;
+    position: relative;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.music-list {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 390px;
+    max-height: 250px;
+    background: var(--white);
+    box-shadow: 0px -5px 15px rgba(0, 0, 0, 0.2);
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    padding: 20px 25px;
+    overflow-y: auto;
+    transform: translateY(100%); /* Hidden initially */
+    transition: transform 0.4s ease, opacity 0.4s ease;
+    visibility: hidden;
+    opacity: 0;
+    z-index: 1;
+}
+
+/* Show the music list when active */
+.music-list.active {
+    transform: translateY(0);
+    visibility: visible;
+    opacity: 1;
+}
+
+
+.music-list .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--darkwhite);
+    margin-bottom: 10px;
+}
+
+.music-list .header .row {
+    display: flex;
+    align-items: center;
+    font-size: 18px;
     color: var(--lightblack);
 }
 
-/* Additional styling for hover effects */
-.controls i:hover {
-    opacity: 0.8; /* Adds a slight opacity change on hover for feedback */
+.music-list .header i {
+    font-size: 24px;
+    cursor: pointer;
+    color: var(--lightblack);
+}
+
+.music-list ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.music-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--darkwhite);
+}
+
+.music-list li:last-child {
+    border-bottom: none;
+}
+
+.music-list li .row span {
+    font-size: 16px;
+    color: var(--lightblack);
+}
+
+.music-list li .row p {
+    font-size: 14px;
+    color: var(--darkwhite);
+    margin-top: 3px;
+}
+
+.music-list .audio-duration {
+    font-size: 14px;
+    color: var(--lightblack);
+    opacity: 0.8;
+}
+
+.music-list .header #close {
+    font-size: 20px;
+    color: var(--lightblack);
+    cursor: pointer;
+}
+
+/* Smooth scrolling for overflow */
+.music-list {
+    overflow-y: auto;
+    scrollbar-width: thin;
 }
